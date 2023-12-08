@@ -1,0 +1,17 @@
+{% extends "blog_app/base.html" %}
+{% block title %} Regisration {% endblock %}
+{% block content %}
+    <h2> Register </h2>
+    {% if form.errors %}
+        <div style="display: table; margin: 0 auto; text-align: left;">
+            {% for error in form.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Register"></p>
+    </form>
+{% endblock %}

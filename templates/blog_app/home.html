@@ -1,0 +1,51 @@
+{% extends "blog_app/base.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+
+    <h1>The Home page</h1>
+
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user }}!</p>
+        <a href="{% url 'logout' %}">Logout</a>
+        <br><br>
+        <!-- Bitcoin -  [[ Bitcoin ]] в фигурных скобках -->
+        <script>
+            $(document).ready(function() {
+                function updateCryptocurrencyPrices() {
+                    $.ajax({
+                        url: '/get_cryptocurrency_prices/',  // Замените на URL вашего представления
+                        type: 'GET',
+                        success: function(data) {
+                            // Обновление данных на странице
+                            // Тут же можно добавить другие криптовалюты и их цены а ниже их названия
+                            $('#bitcoin-price').text(data['Bitcoin']);
+                            $('#ethereum-price').text(data['Ethereum']);
+                            $('#tetherus-price').text(data['TetherUS']);
+                            $('#bnb-price').text(data['BNB']);
+                            $('#ripple-price').text(data['Ripple']);
+                        }
+                    });
+                }
+
+                // Обновление данных каждые 1 секунду
+                setInterval(updateCryptocurrencyPrices, 1000);
+            });
+        </script>
+
+        <div><h4>Bitcoin price: <span id="bitcoin-price"></span></h4></div>
+        <hr>
+        <div><h4>Ethereum price: <span id="ethereum-price"></span></h4></div>
+        <hr>
+        <div><h4>USDT price: <span id="tetherus-price"></span></h4></div>
+        <hr>
+        <div><h4>BNB price: <span id="bnb-price"></span></h4></div>
+        <hr>
+        <div><h4>XRP price: <span id="ripple-price"></span></h4></div>
+
+
+    {% else %}
+        <p>Hello, login to see more!</p>
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+{% endblock %}

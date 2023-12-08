@@ -1,0 +1,21 @@
+{% extends "blog_app/base.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+
+    <h2>Записи</h2>
+    <h3>Фильтрация постов по категориям</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Применить фильтры</button>
+    </form>
+    <br><br>
+    {% for post in posts %}
+        <h4>{{ post.title }}</h4>
+        <h6>{{ post.body }}</h6>
+        <a>Категория поста: {{ post.cat.cat_name }}</a>
+        <hr>
+        <br><br>
+    {% endfor %}
+
+{% endblock %}
